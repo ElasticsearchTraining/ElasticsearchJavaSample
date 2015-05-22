@@ -1,7 +1,5 @@
 package org.sample.elastic.services.db;
 
-import static org.elasticsearch.node.NodeBuilder.*;
-import com.fasterxml.jackson.databind.*;
 import io.dropwizard.lifecycle.Managed;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
