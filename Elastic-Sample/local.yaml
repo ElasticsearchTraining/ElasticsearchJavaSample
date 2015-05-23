@@ -1,3 +1,4 @@
+defaultname: elastic-sample
 server:
   type: simple
   applicationContextPath: /
@@ -5,4 +6,4 @@ server:
     type: http
     port: 80
 swagger:
-  resourcePackage: org.sample.elastic.services.resources
+  resourcePackage: org.sample.elastic.services.api

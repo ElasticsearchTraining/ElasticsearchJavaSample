@@ -1,4 +1,4 @@
-package org.sample.elastic.services.resources;
+package org.sample.elastic.services.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeCreator;
@@ -18,13 +18,13 @@ import com.fasterxml.jackson.databind.*;
 @Api("/elastic")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-public class ElasticResource {
+public class ElasticApi {
 
     private ElasticSearch elasticSearch;
     private Logger esLogger;
     private ObjectMapper mapper;
 
-    public ElasticResource(ElasticSearch elasticSearch, Logger esLogger) {
+    public ElasticApi(ElasticSearch elasticSearch, Logger esLogger) {
         this.elasticSearch = elasticSearch;
         this.esLogger = esLogger;
         this.mapper = new ObjectMapper();
