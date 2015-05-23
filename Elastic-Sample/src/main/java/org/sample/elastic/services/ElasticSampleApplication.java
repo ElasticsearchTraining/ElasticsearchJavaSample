@@ -3,38 +3,38 @@ package org.sample.elastic.services;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.sample.elastic.services.resources.*;
 import org.sample.elastic.services.db.*;
 import org.slf4j.LoggerFactory;
 
 public class ElasticSampleApplication extends Application<ElasticSampleConfiguration> {
 
-    public static void main(final String[] args) throws Exception {
+    public static void main(String... args) throws Exception {
         new ElasticSampleApplication().run(args);
     }
 
     @Override
-    public String getName() {
-        return "ElasticSample";
+    public void initialize(Bootstrap<ElasticSampleConfiguration> bootstrap) {
+        bootstrap.addBundle(new SwaggerBundle<ElasticSampleConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ElasticSampleConfiguration elasticSampleConfiguration) {
+                // this would be the preferred way to set up swagger, you can also construct the object here programtically if you want
+                return elasticSampleConfiguration.swaggerBundleConfiguration;
+            }
+        });
     }
 
     @Override
-    public void initialize(final Bootstrap<ElasticSampleConfiguration> bootstrap) {
-
-    }
-
-    @Override
-    public void run(final ElasticSampleConfiguration configuration,
-                    final Environment environment) {
-
+    public void run(ElasticSampleConfiguration configuration, Environment environment) throws Exception {
         final org.slf4j.Logger esLogger = LoggerFactory.getLogger(ElasticResource.class);
 
         ElasticSearch elasticSearch = new ElasticSearch();
-
         environment.lifecycle().manage(elasticSearch);
+
         environment.jersey().register(new HelloResource());
         environment.jersey().register(new ElasticResource(elasticSearch, esLogger));
-
-    }
+     }
 
 }

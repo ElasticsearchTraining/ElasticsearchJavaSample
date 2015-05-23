@@ -2,9 +2,19 @@ package org.sample.elastic.services;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
 
 public class ElasticSampleConfiguration extends Configuration {
-    // TODO: implement service configuration
+
+    @NotEmpty
+    @JsonProperty
+    private String defaultName = "elastic-sample";
+
+    @JsonProperty("swagger")
+    public SwaggerBundleConfiguration swaggerBundleConfiguration;
+
+    public String getDefaultName() {
+        return defaultName;
+    }
 }

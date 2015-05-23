@@ -14,7 +14,6 @@ public class ElasticSearch implements Managed{
 
     //Method is called start so that it implements doStart from Dropwizard Managed
     public void start() throws Exception {
-
         final Settings esSettings = ImmutableSettings.settingsBuilder()
                 .put("node.name", "javaclient")
                 .put("http.port", "10080")
@@ -33,10 +32,8 @@ public class ElasticSearch implements Managed{
 
     //Method is called stop so that it implements doStop from Dropwizard Managed
     public void stop() throws Exception {
-
         this.elasticClient.close();
         this.elasticNode.stop();
-
     }
 
 }
