@@ -1,9 +1,9 @@
-defaultname: elastic-sample
 server:
   type: simple
   applicationContextPath: /
+  adminContextPath: /admin
   connector:
     type: http
     port: 80
 swagger:
-  resourcePackage: org.sample.elastic.services.api
+  resourcePackage: org.sample.elastic.services.resources

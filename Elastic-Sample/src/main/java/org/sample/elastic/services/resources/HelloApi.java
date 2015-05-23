@@ -1,4 +1,4 @@
-package org.sample.elastic.services.api;
+package org.sample.elastic.services.resources;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +19,8 @@ import javax.ws.rs.core.Response;
 //import javax.ws.rs.QueryParam;
 //import javax.ws.rs.core.MediaType;
 
+@Api("Test")
 @Path("/test")
-@Api("/test")
 public class HelloApi {
 
     private ObjectMapper mapper = new ObjectMapper();
