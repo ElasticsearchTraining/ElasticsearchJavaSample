@@ -6,3 +6,8 @@ Elastic-Sample/*.iws
 Elastic-Sample/*.ipr
 Elastic-Sample/*.log
 *.prog
+.idea
+*.iml
+*.iws
+*.ipr
+*.log
