@@ -15,11 +15,37 @@
     <packaging>jar</packaging>
 
     <name>Elastic-Sample</name>
+    <description>A sample project to demostrate ElasticSearch Java API's.</description>
+    <url>https://github.com/rajanm/ElasticSample</url>
+    <inceptionYear>2015</inceptionYear>
+    <developers>
+        <developer>
+            <name>Rajan Manickavasagam</name>
+            <email>rajan.manickavasgam@gmail.com</email>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:git://github.com/rajanm/ElasticSample.git</connection>
+        <developerConnection>scm:git:git://github.com/rajanm/ElasticSample.git</developerConnection>
+        <url>https://github.com/rajanm/ElasticSample</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>0.8.0</dropwizard.version>
+        <elasticsearch.version>1.5.2</elasticsearch.version>
+        <jacksoncore.version>2.5.1</jacksoncore.version>
+        <dropwizard.swagger.bundle>0.7.0</dropwizard.swagger.bundle>
+        <json.version>20140107</json.version>
+        <jdk.version>1.7</jdk.version>
         <mainClass>org.sample.elastic.services.ElasticSampleApplication</mainClass>
     </properties>
 
@@ -32,25 +58,24 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>1.4.2</version>
+            <version>${elasticsearch.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.5.1</version>
+            <version>${jacksoncore.version}</version>
         </dependency>
         <dependency>
             <groupId>io.federecio</groupId>
             <artifactId>dropwizard-swagger</artifactId>
-            <version>0.7.0</version>
+            <version>${dropwizard.swagger.bundle}</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20140107</version>
+            <version>${json.version}</version>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>

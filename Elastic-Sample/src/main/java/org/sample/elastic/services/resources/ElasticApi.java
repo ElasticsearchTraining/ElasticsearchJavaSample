@@ -3,9 +3,7 @@ package org.sample.elastic.services.resources;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
-import com.wordnik.swagger.util.Json;
 import org.elasticsearch.search.SearchHit;
-import org.json.JSONObject;
 import org.sample.elastic.services.db.ElasticSearch;
 import org.slf4j.Logger;
 

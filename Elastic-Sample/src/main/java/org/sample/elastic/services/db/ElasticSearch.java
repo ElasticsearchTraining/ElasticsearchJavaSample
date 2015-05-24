@@ -1,38 +1,25 @@
 package org.sample.elastic.services.db;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wordnik.swagger.util.Json;
 import io.dropwizard.lifecycle.Managed;
 import org.elasticsearch.action.WriteConsistencyLevel;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.Base64;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.*;
-import org.elasticsearch.common.xcontent.json.JsonXContentParser;
-import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.json.JSONObject;
 import org.slf4j.Logger;
-import sun.org.mozilla.javascript.internal.json.JsonParser;
-
 import java.util.Iterator;
-
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.index.query.FilterBuilders.*;
-import org.elasticsearch.index.query.QueryBuilders.*;
 
 public class ElasticSearch implements Managed{
 
@@ -147,12 +134,15 @@ public class ElasticSearch implements Managed{
     public SearchResponse search(String indexName, String indexType, String term,
                                  Logger esLogger) throws Exception {
         esLogger.info(term);
+        QueryStringQueryBuilder queryStringQueryBuilder = new QueryStringQueryBuilder(term);
+
         SearchResponse response = elasticClient.prepareSearch(indexName)
                 .setTypes(indexType)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.queryString(term))
-                //.setQuery(QueryBuilders.termQuery("multi", term))             // Query
-                //.setPostFilter(FilterBuilders.rangeFilter("age").from(12).to(18))   // Filter
+                .setQuery(queryStringQueryBuilder.buildAsBytes())
+                //.setQuery(QueryBuilders.queryString(term))                        //deprecated
+                //.setQuery(QueryBuilders.termQuery("multi", term))                 // Query
+                //.setPostFilter(FilterBuilders.rangeFilter("age").from(12).to(18)) // Filter
                 .setFrom(0).setSize(50).setExplain(false)
                 .execute()
                 .actionGet();
