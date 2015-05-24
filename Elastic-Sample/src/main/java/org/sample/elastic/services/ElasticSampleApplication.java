@@ -5,8 +5,8 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-import org.sample.elastic.services.resources.ElasticApi;
-import org.sample.elastic.services.resources.HelloApi;
+import org.sample.elastic.services.resources.ElasticResource;
+import org.sample.elastic.services.resources.HelloResource;
 import org.sample.elastic.services.core.ElasticSampleConfiguration;
 import org.sample.elastic.services.db.*;
 import org.sample.elastic.services.health.ElasticHealth;
@@ -31,14 +31,14 @@ public class ElasticSampleApplication extends Application<ElasticSampleConfigura
 
     @Override
     public void run(ElasticSampleConfiguration configuration, Environment environment) throws Exception {
-        final org.slf4j.Logger esLogger = LoggerFactory.getLogger(ElasticApi.class);
-        final org.slf4j.Logger defaultLogger = LoggerFactory.getLogger(HelloApi.class);
+        final org.slf4j.Logger esLogger = LoggerFactory.getLogger(ElasticResource.class);
+        final org.slf4j.Logger defaultLogger = LoggerFactory.getLogger(HelloResource.class);
 
         ElasticSearch elasticSearch = new ElasticSearch();
         environment.lifecycle().manage(elasticSearch);
 
-        environment.jersey().register(new HelloApi(defaultLogger));
-        environment.jersey().register(new ElasticApi(elasticSearch, esLogger));
+        environment.jersey().register(new HelloResource(defaultLogger));
+        environment.jersey().register(new ElasticResource(elasticSearch, esLogger));
 
         environment.healthChecks().register("ElasticSearch", new ElasticHealth(elasticSearch));
      }

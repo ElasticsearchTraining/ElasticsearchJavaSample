@@ -10,12 +10,12 @@ import javax.ws.rs.core.Response;
 
 @Api("Test")
 @Path("/test")
-public class HelloApi {
+public class HelloResource {
 
     private ObjectMapper mapper = new ObjectMapper();
     private Logger defaultLogger;
 
-    public HelloApi(Logger defaultLogger) {
+    public HelloResource(Logger defaultLogger) {
         this.defaultLogger = defaultLogger;
     }
 
