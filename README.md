@@ -1,7 +1,8 @@
 ElasticSample
 =============
 
-This is a sample project to demonstrate the ElasticSearch Java API's.
+This is a sample project to demonstrate the ElasticSearch Java API's. I use this project to take 
+trainings on ElasticSearch.
 
 Project Details:
 ----------------
@@ -24,7 +25,7 @@ Build Steps:
 - Ensure the path to Java and Maven are set.
 - Run the command "mvn clean package" from the Elastic-Sample folder.
 - Either use the IDE or execute the built fat JAR. Pass the following program arguements "server local.yaml".
-- Once the application is running, open (http://localhost/swagger) in the browser.
+- Once the application is running, open [http://localhost/swagger](http://localhost/swagger) in the browser.
 
 Tips:
 -----
