@@ -9,7 +9,7 @@ Project Details:
 - dropwizard-swagger bundle v0.7
 - Java v1.7
 - ElasticSearch Java API v1.5.2
-- Maven 3.2.5
+- Maven v3.2.5
 
 This project has been tested with ElasticSearch Server v1.5.2.
 
