@@ -24,7 +24,7 @@ Build Steps:
 - Ensure the path to Java and Maven are set.
 - Run the command "mvn clean package" from the Elastic-Sample folder.
 - Either use the IDE or execute the built fat JAR. Pass the following program arguements "server local.yaml".
-- Once the application is running, open "http://localhost/swagger" in the browser.
+- Once the application is running, open (http://localhost/swagger) in the browser.
 
 Tips:
 -----
