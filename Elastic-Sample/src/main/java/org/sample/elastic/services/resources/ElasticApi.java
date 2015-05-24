@@ -4,6 +4,8 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.util.Json;
+import org.elasticsearch.search.SearchHit;
+import org.json.JSONObject;
 import org.sample.elastic.services.db.ElasticSearch;
 import org.slf4j.Logger;
 
@@ -11,6 +13,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Api("Elastic")
 @Path("/elastic")
@@ -73,6 +78,22 @@ public class ElasticApi {
         esLogger.info("Attempting to write a document : " + document);
         return Response.ok(elasticSearch.createDocument(indexName, indexType, document,
                 esLogger)).build();
+    }
+
+    @GET
+    @ApiOperation("Search for documents")
+    @Path("/search/{indexName}/{indexType}/{term}")
+    public Response search(@PathParam("indexName") String indexName,
+                           @PathParam("indexType") String indexType,
+                           @PathParam("term") String term) throws Exception {
+        esLogger.info("Search");
+        Map<String, Object> json = new HashMap<String, Object>();
+        java.util.Iterator<SearchHit> hitIterator = elasticSearch.search(indexName, indexType, term, esLogger).getHits().iterator();
+        while(hitIterator.hasNext()){
+            SearchHit hit = hitIterator.next();
+            json.put(hit.getId(),hit.getSource());
+        }
+        return Response.ok(json).build();
     }
 
 }
