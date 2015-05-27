@@ -5,6 +5,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.elasticsearch.search.SearchHit;
 import org.sample.elastic.services.db.ElasticSearch;
+import org.sample.elastic.services.models.SearchResult;
 import org.slf4j.Logger;
 
 import javax.ws.rs.*;
@@ -79,17 +80,28 @@ public class ElasticResource {
     }
 
     @GET
-    @ApiOperation("Search for documents")
+    @ApiOperation(
+            value = "Search for documents",
+            notes = "Ensure that the index and documents are already created before searching.",
+            response = SearchResult.class
+            )
     @Path("/search/{IndexName}/{DocumentType}/{SearchTerm}")
     public Response search(@PathParam("IndexName") String indexName,
                            @PathParam("DocumentType") String indexType,
-                           @PathParam("SearchTerm") String term) throws Exception {
-        esLogger.info("Search");
+                           @PathParam("SearchTerm") String term,
+                           @QueryParam("StartPage") @ApiParam(defaultValue = "0") int startPage,
+                           @QueryParam("PageSize") @ApiParam(defaultValue = "30") int pageSize,
+                           @QueryParam("StartPrice") @ApiParam(defaultValue = "0") float startPrice,
+                           @QueryParam("EndPrice") @ApiParam(defaultValue = "99999") float endPrice) throws Exception {
+
+        esLogger.info("Calling Search with term : " + term);
         Map<String, Object> json = new HashMap<String, Object>();
-        java.util.Iterator<SearchHit> hitIterator = elasticSearch.search(indexName, indexType, term, esLogger).getHits().iterator();
+        java.util.Iterator<SearchHit> hitIterator = elasticSearch.search(indexName, indexType, term,
+                startPage, pageSize, startPrice, endPrice, esLogger).getHits().iterator();
         while(hitIterator.hasNext()){
             SearchHit hit = hitIterator.next();
-            json.put(hit.getId(),hit.getSource());
+            SearchResult searchResult = new SearchResult(hit.getId(),hit.getScore(),hit.getSourceAsString());
+            json.put(hit.getId(), searchResult);
         }
         return Response.ok(json).build();
     }

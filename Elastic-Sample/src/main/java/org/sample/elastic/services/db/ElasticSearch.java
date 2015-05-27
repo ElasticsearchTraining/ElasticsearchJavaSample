@@ -1,6 +1,8 @@
 package org.sample.elastic.services.db;
 
 import io.dropwizard.lifecycle.Managed;
+import org.apache.lucene.queryparser.xml.builders.FilteredQueryBuilder;
+import org.apache.lucene.queryparser.xml.builders.RangeFilterBuilder;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
@@ -9,6 +11,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.*;
+import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
@@ -31,6 +34,8 @@ public class ElasticSearch implements Managed{
         final Settings esSettings = ImmutableSettings.settingsBuilder()
                 .put("node.name", "javaclient")
                 .put("http.port", "10080")
+                .put("discovery.zen.ping.multicast.enabled",false)
+                .put("discovery.zen.ping.unicast.hosts","localhost[9300-9400]")
                 .build();
 
         elasticNode = new NodeBuilder()
@@ -132,21 +137,20 @@ public class ElasticSearch implements Managed{
     }
 
     public SearchResponse search(String indexName, String indexType, String term,
+                                 int startPage, int pageSize, float startPrice, float endPrice,
                                  Logger esLogger) throws Exception {
         esLogger.info(term);
         QueryStringQueryBuilder queryStringQueryBuilder = new QueryStringQueryBuilder(term);
 
-        SearchResponse response = elasticClient.prepareSearch(indexName)
+        SearchResponse searchResponse = elasticClient.prepareSearch(indexName)
                 .setTypes(indexType)
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setSearchType(SearchType.DEFAULT)
                 .setQuery(queryStringQueryBuilder.buildAsBytes())
-                //.setQuery(QueryBuilders.queryString(term))                        //deprecated
-                //.setQuery(QueryBuilders.termQuery("multi", term))                 // Query
-                //.setPostFilter(FilterBuilders.rangeFilter("age").from(12).to(18)) // Filter
-                .setFrom(0).setSize(50).setExplain(false)
+                .setPostFilter(FilterBuilders.rangeFilter("price").from(startPrice).to(endPrice))
+                .setFrom(startPage).setSize(pageSize).setExplain(false)
                 .execute()
                 .actionGet();
-        return response;
+        return searchResponse;
     }
 
 }
