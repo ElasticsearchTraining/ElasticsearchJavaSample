@@ -34,7 +34,7 @@ public class ElasticSampleApplication extends Application<ElasticSampleConfigura
         final org.slf4j.Logger esLogger = LoggerFactory.getLogger(ElasticResource.class);
         final org.slf4j.Logger defaultLogger = LoggerFactory.getLogger(HelloResource.class);
 
-        ElasticSearch elasticSearch = new ElasticSearch();
+        ElasticSearch elasticSearch = new ElasticSearch(configuration);
         environment.lifecycle().manage(elasticSearch);
 
         environment.jersey().register(new HelloResource(defaultLogger));
