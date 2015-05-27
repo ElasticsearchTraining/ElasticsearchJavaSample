@@ -34,8 +34,10 @@ should appear as shown below.
 
 Tips:
 -----
-- Run ElasticSearch Server locally. Set up cluster.name in elasticsearch.yml as "elasticsearch-local".
-- Use the Head plugin in ElasticSearch to view the indices, document, queries, cluster and node status.
+- Run ElasticSearch Server locally. Set up the cluster.name in elasticsearch.yml as "elasticsearch-local".
+- Refer the [Elasticsearch Samples Gist](https://gist.github.com/rajanm/3fdbc7999f0120ce5e87) for scripts
+to create indices and documents.
+- Install and use the Head plugin in ElasticSearch to view the indices, documents, queries, cluster and node status etc.
 - Update Maven settings to download the dependencies to a local folder on disk (instead of a network folder).
 
 Thanks:
