@@ -27,6 +27,8 @@ Build Steps:
 - Run the command "mvn clean package" from the Elastic-Sample folder.
 - Either use the IDE or execute the built fat JAR. Pass the following program arguements "server local.yaml".
 - Once the application is running, open [http://localhost/swagger](http://localhost/swagger) in the browser.
+![Swagger](/blob/master/Elastic-Sample/swagger.png?raw=true "Swagger") 
+
 
 Tips:
 -----
