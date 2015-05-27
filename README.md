@@ -16,9 +16,10 @@ This project has been tested with ElasticSearch Server v1.5.2.
 
 Prerequisites:
 --------------
-- Git Bash / Client (if behind a firewall, update the config with proxy settings.)
+- Git Bash / Client
 - Java v1.7
-- Maven v3.2.5 (If behind a firewall, update the conf/settings.xml in Maven to include the relevant proxy settings.)
+- Maven v3.2.5 
+- cURL or Postman or similar browser extension
 
 Build Steps: 
 ------------
@@ -39,6 +40,7 @@ Tips:
 to create indices and documents.
 - Install and use the Head plugin in ElasticSearch to view the indices, documents, queries, cluster and node status etc.
 - Update Maven settings to download the dependencies to a local folder on disk (instead of a network folder).
+- If behind a firewall, update the proxy settings for Git client and Maven.
 
 Thanks:
 -------
