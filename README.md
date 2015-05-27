@@ -16,6 +16,7 @@ This project has been tested with ElasticSearch Server v1.5.2.
 
 Prerequisites:
 --------------
+- Git Bash / Client (if behind a firewall, update the config with proxy settings.)
 - Java v1.7
 - Maven v3.2.5 (If behind a firewall, update the conf/settings.xml in Maven to include the relevant proxy settings.)
 
@@ -29,11 +30,11 @@ Build Steps:
 
 Tips:
 -----
-- Run ElasticSearch Server locally.
-- Use the Head plugin in ElasticSearch.
-- Update Maven settings to download the dependencies to a local folder on disk.
+- Run ElasticSearch Server locally. Set up cluster.name in elasticsearch.yml as "elasticsearch-local".
+- Use the Head plugin in ElasticSearch to view the indices, document, queries, cluster and node status.
+- Update Maven settings to download the dependencies to a local folder on disk (instead of a network folder).
 
 Thanks:
 -------
-- Many thanks to [federecio](https://github.com/federecio) for the [dropwizard-swagger](https://github.com/federecio/dropwizard-swagger) bundle. It saves a lot of time
-and issues in dropwizard and swagger integration.
+- Many thanks to [federecio](https://github.com/federecio) for the [dropwizard-swagger](https://github.com/federecio/dropwizard-swagger) 
+bundle. It saves a lot of time and issues in dropwizard and swagger integration.
