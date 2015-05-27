@@ -1,19 +1,16 @@
 package org.sample.elastic.services.db;
 
 import io.dropwizard.lifecycle.Managed;
-import org.apache.lucene.queryparser.xml.builders.FilteredQueryBuilder;
-import org.apache.lucene.queryparser.xml.builders.RangeFilterBuilder;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.*;
 import org.elasticsearch.index.query.FilterBuilders;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
@@ -23,24 +20,37 @@ import java.util.Iterator;
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
+import org.sample.elastic.services.core.ElasticSampleConfiguration;
 
 public class ElasticSearch implements Managed{
 
     private Client elasticClient;
     private Node elasticNode;
+    private static String elasticHost;
+    private static String elasticClusterName;
+    private static String elasticClientName;
+    private static String elasticPort;
+
+    public ElasticSearch(ElasticSampleConfiguration configuration){
+        this.elasticHost = configuration.getElasticsearchHost();
+        this.elasticClusterName = configuration.getElasticsearchCluster();
+        this.elasticClientName = configuration.getElasticsearchClientNodeName();
+        this.elasticPort = configuration.getElasticsearchClientPort();
+    }
 
     //Method is called start so that it implements doStart from Dropwizard Managed
+    //All these settings can be loaded form elasticsearch or a custom yml file
     public void start() throws Exception {
         final Settings esSettings = ImmutableSettings.settingsBuilder()
-                .put("node.name", "javaclient")
-                .put("http.port", "10080")
-                .put("discovery.zen.ping.multicast.enabled",false)
-                .put("discovery.zen.ping.unicast.hosts","localhost[9300-9400]")
+                .put("node.name", elasticClientName) //name of the node
+                .put("http.port", elasticPort) //port on which the node runs in client machine
+                .put("discovery.zen.ping.multicast.enabled", false) //disable multicast
+                .put("discovery.zen.ping.unicast.hosts", elasticHost) //set the unicast hosts
                 .build();
 
         elasticNode = new NodeBuilder()
                 .settings(esSettings)
-                .clusterName("elasticsearch-local")
+                .clusterName(elasticClusterName) //cluster to connect to
                 .client(true)
                 .build()
                 .start();
@@ -137,19 +147,24 @@ public class ElasticSearch implements Managed{
     }
 
     public SearchResponse search(String indexName, String indexType, String term,
-                                 int startPage, int pageSize, float startPrice, float endPrice,
-                                 Logger esLogger) throws Exception {
+                                 int startPage, int pageSize, String filterField, float startFilter,
+                                 float endFilter, Logger esLogger) throws Exception {
         esLogger.info(term);
         QueryStringQueryBuilder queryStringQueryBuilder = new QueryStringQueryBuilder(term);
 
-        SearchResponse searchResponse = elasticClient.prepareSearch(indexName)
+        SearchRequestBuilder searchRequestBuilder = elasticClient.prepareSearch(indexName)
                 .setTypes(indexType)
                 .setSearchType(SearchType.DEFAULT)
                 .setQuery(queryStringQueryBuilder.buildAsBytes())
-                .setPostFilter(FilterBuilders.rangeFilter("price").from(startPrice).to(endPrice))
-                .setFrom(startPage).setSize(pageSize).setExplain(false)
+                .setFrom(startPage).setSize(pageSize).setExplain(false);
+
+        if (filterField!=null && !filterField.isEmpty() && startFilter >= 0 && endFilter > 0)
+                searchRequestBuilder.setPostFilter(FilterBuilders.rangeFilter(filterField).from(startFilter).to(endFilter));
+
+        SearchResponse searchResponse = searchRequestBuilder
                 .execute()
                 .actionGet();
+
         return searchResponse;
     }
 

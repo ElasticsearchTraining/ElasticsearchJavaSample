@@ -91,13 +91,14 @@ public class ElasticResource {
                            @PathParam("SearchTerm") String term,
                            @QueryParam("StartPage") @ApiParam(defaultValue = "0") int startPage,
                            @QueryParam("PageSize") @ApiParam(defaultValue = "30") int pageSize,
-                           @QueryParam("StartPrice") @ApiParam(defaultValue = "0") float startPrice,
-                           @QueryParam("EndPrice") @ApiParam(defaultValue = "99999") float endPrice) throws Exception {
+                           @QueryParam("FilterField") @ApiParam(defaultValue = "") String filterField,
+                           @QueryParam("StartFilter") @ApiParam(defaultValue = "") float startFilter,
+                           @QueryParam("EndFilter") @ApiParam(defaultValue = "") float endFilter) throws Exception {
 
         esLogger.info("Calling Search with term : " + term);
         Map<String, Object> json = new HashMap<String, Object>();
         java.util.Iterator<SearchHit> hitIterator = elasticSearch.search(indexName, indexType, term,
-                startPage, pageSize, startPrice, endPrice, esLogger).getHits().iterator();
+                startPage, pageSize, filterField, startFilter, endFilter, esLogger).getHits().iterator();
         while(hitIterator.hasNext()){
             SearchHit hit = hitIterator.next();
             SearchResult searchResult = new SearchResult(hit.getId(),hit.getScore(),hit.getSourceAsString());
