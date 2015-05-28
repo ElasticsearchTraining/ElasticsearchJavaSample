@@ -7,14 +7,12 @@ import org.elasticsearch.search.SearchHit;
 import org.sample.elastic.services.db.ElasticSearch;
 import org.sample.elastic.services.models.SearchResult;
 import org.slf4j.Logger;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Api("Elastic")
 @Path("/elastic")
@@ -96,15 +94,16 @@ public class ElasticResource {
                            @QueryParam("EndFilter") @ApiParam(defaultValue = "") float endFilter) throws Exception {
 
         esLogger.info("Calling Search with term : " + term);
-        Map<String, Object> json = new HashMap<String, Object>();
-        java.util.Iterator<SearchHit> hitIterator = elasticSearch.search(indexName, indexType, term,
-                startPage, pageSize, filterField, startFilter, endFilter, esLogger).getHits().iterator();
-        while(hitIterator.hasNext()){
-            SearchHit hit = hitIterator.next();
-            SearchResult searchResult = new SearchResult(hit.getId(),hit.getScore(),hit.getSourceAsString());
-            json.put(hit.getId(), searchResult);
+
+        List<SearchResult> searchResults = new ArrayList<>();
+        SearchHit[] searchHits = elasticSearch.search(indexName, indexType, term,
+                startPage, pageSize, filterField, startFilter, endFilter, esLogger).getHits().getHits();
+        for (SearchHit searchHit : searchHits) {
+            SearchResult searchResult = new SearchResult(searchHit.getId(),searchHit.getScore(),searchHit.getSourceAsString());
+            searchResults.add(searchResult);
         }
-        return Response.ok(json).build();
+
+        return Response.ok(searchResults).build();
     }
 
 }
