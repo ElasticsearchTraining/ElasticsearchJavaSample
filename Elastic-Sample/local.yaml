@@ -9,7 +9,7 @@ server:
 swagger:
   resourcePackage: org.sample.elastic.services.resources
 
-elasticsearch.host: localhost[9300-9400] 
+elasticsearch.host: localhost[9300-9400]
 elasticsearch.cluster: elasticsearch-local
 elasticsearch.clientnode: javaclient
 elasticsearch.clientport: 10080
