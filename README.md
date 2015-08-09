@@ -1,8 +1,7 @@
-ElasticSample
-=============
+ElasticsearchJavaSample
+=======================
 
-This is a sample project to demonstrate the ElasticSearch Java API's. I use this project to take 
-trainings on ElasticSearch.
+This is a sample project to demonstrate the ElasticSearch Java API's. I use this project as part of trainings on ElasticSearch.
 
 Project Details:
 ----------------
