@@ -29,7 +29,7 @@ Build Steps:
 - Once the application is running, open [http://localhost/swagger](http://localhost/swagger) in the browser. Swagger
 should appear as shown below.
 
-![Swagger](/Elastic-Sample/swagger.png?raw=true "Swagger") 
+![Swagger](swagger.png?raw=true "Swagger") 
 
 
 Tips:
