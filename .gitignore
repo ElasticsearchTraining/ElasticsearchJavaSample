@@ -1,10 +1,6 @@
-Elastic-Sample/.idea/*
-Elastic-Sample/.idea
-Elastic-Sample/target/*
-Elastic-Sample/*.iml
-Elastic-Sample/*.iws
-Elastic-Sample/*.ipr
-Elastic-Sample/*.log
+.idea/*
+.idea
+target/*
 *.prog
 .idea
 *.iml
