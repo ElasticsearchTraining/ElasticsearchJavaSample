@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample.svg?branch=master)](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample)
+[![Build Status](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample.svg?branch=master)](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample) [![Coverity Scan Build Status](https://scan.coverity.com/projects/6428/badge.svg)](https://scan.coverity.com/projects/elasticsearchtraining-elasticsearchjavasample)
 
 ElasticsearchJavaSample
 =======================
