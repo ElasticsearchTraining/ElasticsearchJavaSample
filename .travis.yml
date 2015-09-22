@@ -1,1 +1,17 @@
 language: java
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "b2hPzkwKJpLgd4L7mG5K7VWJz9WKLqYpEdTlg3Yx5/BJE0DFL6XXqKeFHY6RDE+3htr8aJY9kSJyqJpS4f1jaTEcBhmWdpItgykSYnCv1an4/Is0zpf5g+2PzoUSFGGfrujWMvLWtpf/qvOwu435gtzpI6MWWj/xHg0+bqFFBNvp5oHCXa8S7DKMv9vcNzQ5CMS1ME4KAtK4Q2AIXgu/GGyH/krgy3gL9w+duUoJt8bMRxKGU7hqEOLFsdamsz855MooJg0ebfZnuak6zF3D/VOzdZ+nvbxMnq/IgHijATgcQQv5960wcj4PT3U2cQpj4RPjzxdEaSY/7BZaeQnzTyotfdk/zgZ64VPlE+p2M1yNtdZNt6p+1jkI7EN41LhptNcYXZv4sqiUBqRcSOS8+v7P5u+PTSlDnZnhv10rfygwa7AkrrsaB5cixaWUV/0kVB/UmTi/KMoEfI0NDFuReVkW3vQEKzMStln1zHuYSEELbj/xjVP4XTlVwc/OubDu8hJ6Ar7PyeBO7/SWbfznUszaA7kRZzmqKPQQ+prtXhjEFY0+F4nWQDYuyRmcRzfWm0B5/qvbudREf3s/WkcjiLctNjm98bdFl2EmB4uDajTwg0/MZfpuir+/LFpK1+yn9/VLaCkwIzigZu//P7CxdZDBlAczy+0akwmwwoSEnew="
+
+addons:
+  coverity_scan:
+    project:
+      name: "ElasticsearchTraining/ElasticsearchJavaSample"
+      description: "Build submitted via Travis CI"
+    notification_email: rajan.manickavasagam@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: master
