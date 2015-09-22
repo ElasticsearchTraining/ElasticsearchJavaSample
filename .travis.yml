@@ -17,4 +17,4 @@ addons:
     branch_pattern: master
 
 after_success:
-- coveralls
+  - mvn jacoco:report coveralls:jacoco
