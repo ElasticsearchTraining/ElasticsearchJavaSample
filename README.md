@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample.svg?branch=master)](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample) [![Coverity Scan Build Status](https://scan.coverity.com/projects/6428/badge.svg)](https://scan.coverity.com/projects/elasticsearchtraining-elasticsearchjavasample) [![Codeship Deploy Status](https://codeship.com/projects/77e61860-43c5-0133-6157-525e623546c2/status?branch=master)](https://codeship.com/projects/77e61860-43c5-0133-6157-525e623546c2/status?branch=master)
-
+[![Build Status](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample.svg?branch=master)](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample) [![Coverity Scan Build Status](https://scan.coverity.com/projects/6428/badge.svg)](https://scan.coverity.com/projects/elasticsearchtraining-elasticsearchjavasample) [![Codeship Deploy Status](https://codeship.com/projects/77e61860-43c5-0133-6157-525e623546c2/status?branch=master)](https://codeship.com/projects/77e61860-43c5-0133-6157-525e623546c2/status?branch=master) [![Heroku](https://heroku-badge.herokuapp.com/?app=elasticsearchjavasample&root=swagger/)](https://elasticsearchjavasample.herokuapp.com/swagger)
 
 ElasticsearchJavaSample
 =======================
