@@ -48,6 +48,7 @@
         <jdk.version>1.7</jdk.version>
         <junit.version>4.11</junit.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
+        <surefire.version>2.17</surefire.version>
         <coveralls.version>3.0.1</coveralls.version>
 		<jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         <mainClass>org.sample.elastic.services.ElasticSampleApplication</mainClass>
@@ -107,11 +108,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
             </plugin>
 
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
