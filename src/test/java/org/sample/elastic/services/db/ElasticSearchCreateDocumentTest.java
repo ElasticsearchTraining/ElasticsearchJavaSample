@@ -1,16 +1,15 @@
 package org.sample.elastic.services.db;
 
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.sample.elastic.services.core.ElasticSampleConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Date;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class ElasticSearchCreateIndexTest extends TestCase {
+public class ElasticSearchCreateDocumentTest {
 
     private ElasticSampleConfiguration esConfig;
     private ElasticSearch esClient;
@@ -37,10 +36,10 @@ public class ElasticSearchCreateIndexTest extends TestCase {
         esClient = null;
     }
 
-    @Test
-    public void testCreateIndex() throws Exception {
-        boolean indexResult = esClient.createIndex(indexName,"english","product","{name:string}",defaultLogger);
-        assertThat(indexResult).isEqualTo(true);
-    }
 
+    @Test
+    public void testCreateDocument() throws Exception {
+       boolean documentResult = esClient.createDocument(indexName,"product","{name:\"sony\"}",defaultLogger);
+        assertThat(documentResult).isEqualTo(true);
+    }
 }

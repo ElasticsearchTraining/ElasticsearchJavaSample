@@ -1,11 +1,10 @@
 package org.sample.elastic.services.db;
 
-import junit.framework.TestCase;
-import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
 import org.sample.elastic.services.core.ElasticSampleConfiguration;
 
-public class ElasticSearchTest extends TestCase {
+public class ElasticSearchTest {
 
     @Test
     public void testStart() throws Exception {

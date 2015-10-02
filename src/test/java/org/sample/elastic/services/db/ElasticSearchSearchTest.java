@@ -1,16 +1,16 @@
 package org.sample.elastic.services.db;
 
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.sample.elastic.services.core.ElasticSampleConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Date;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.elasticsearch.action.search.SearchResponse;
 
-public class ElasticSearchCreateIndexTest extends TestCase {
+public class ElasticSearchSearchTest {
 
     private ElasticSampleConfiguration esConfig;
     private ElasticSearch esClient;
@@ -28,6 +28,8 @@ public class ElasticSearchCreateIndexTest extends TestCase {
         esClient = new ElasticSearch(esConfig);
         esClient.start();
         indexName = "products" + new Date().getTime();
+        boolean indexResult = esClient.createIndex(indexName,"english","product","{name:string}",defaultLogger);
+        boolean documentResult1 = esClient.createDocument(indexName,"product","{name:\"led tv\"}",defaultLogger);
     }
 
     @After
@@ -38,9 +40,8 @@ public class ElasticSearchCreateIndexTest extends TestCase {
     }
 
     @Test
-    public void testCreateIndex() throws Exception {
-        boolean indexResult = esClient.createIndex(indexName,"english","product","{name:string}",defaultLogger);
-        assertThat(indexResult).isEqualTo(true);
+    public void testSearch() throws Exception {
+        SearchResponse searchResponse = esClient.search(indexName, "product", "lcd", 0, 10, "", 0, 0, defaultLogger);
+        assertThat(searchResponse.getHits().totalHits()).isEqualTo(0);
     }
-
 }
