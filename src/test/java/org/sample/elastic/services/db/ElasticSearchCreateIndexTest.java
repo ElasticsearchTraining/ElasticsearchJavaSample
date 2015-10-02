@@ -10,15 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Date;
 
-public class ElasticSearchTestCreateIndex extends TestCase {
+public class ElasticSearchCreateIndexTest extends TestCase {
 
     private ElasticSampleConfiguration esConfig;
     private ElasticSearch esClient;
     private Logger defaultLogger;
     private String indexName;
 
-    @Before
-    public void setup() throws Exception {
+    @Test
+    public void testCreateIndex() throws Exception {
         defaultLogger = LoggerFactory.getLogger(ElasticSearch.class);
         esConfig = new ElasticSampleConfiguration();
         esConfig.setElasticsearchClientNodeName("javaclient");
@@ -28,17 +28,9 @@ public class ElasticSearchTestCreateIndex extends TestCase {
         esClient = new ElasticSearch(esConfig);
         esClient.start();
         indexName = "products" + new Date().getTime();
-    }
-
-    @Test
-    public void testCreateIndex() throws Exception {
         boolean indexResult = esClient.createIndex(indexName,"english","product","{name:string}",defaultLogger);
-        assertThat(indexResult).isEqualTo(true);
-    }
-
-    @After
-    public void teardown() throws Exception {
         esClient.deleteIndex(indexName, defaultLogger);
+        assertThat(indexResult).isEqualTo(true);
     }
 
 }
