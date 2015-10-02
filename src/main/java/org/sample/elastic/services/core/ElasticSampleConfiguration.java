@@ -3,7 +3,6 @@ package org.sample.elastic.services.core;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +20,10 @@ public class ElasticSampleConfiguration extends Configuration{
         return elasticsearchHost;
     }
 
+    public void setElasticsearchHost(String elasticsearchHost) {
+        this.elasticsearchHost = elasticsearchHost;
+    }
+
     @Valid
     @NotNull
     @JsonProperty("elasticsearch.cluster")
@@ -28,6 +31,10 @@ public class ElasticSampleConfiguration extends Configuration{
 
     public String getElasticsearchCluster() {
         return elasticsearchCluster;
+    }
+
+    public void setElasticsearchCluster(String elasticsearchCluster) {
+        this.elasticsearchCluster = elasticsearchCluster;
     }
 
     @Valid
@@ -39,6 +46,10 @@ public class ElasticSampleConfiguration extends Configuration{
         return elasticsearchClientNodeName;
     }
 
+    public void setElasticsearchClientNodeName(String elasticsearchClientNodeName) {
+        this.elasticsearchClientNodeName = elasticsearchClientNodeName;
+    }
+
     @Valid
     @NotNull
     @JsonProperty("elasticsearch.clientport")
@@ -48,5 +59,8 @@ public class ElasticSampleConfiguration extends Configuration{
         return elasticsearchClientPort;
     }
 
+    public void setElasticsearchClientPort(String elasticsearchClientPort) {
+        this.elasticsearchClientPort = elasticsearchClientPort;
+    }
 
 }

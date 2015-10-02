@@ -3,7 +3,10 @@ package org.sample.elastic.services.db;
 import io.dropwizard.lifecycle.Managed;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexAction;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
+import org.elasticsearch.action.deletebyquery.DeleteByQueryRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.client.Client;
@@ -12,6 +15,7 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.*;
+import org.elasticsearch.index.engine.Engine;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.node.Node;
@@ -136,6 +140,14 @@ public class ElasticSearch implements Managed{
                     .isAcknowledged();
         } else
             return false;
+    }
+
+    public boolean deleteIndex(String indexName, Logger esLogger) {
+        esLogger.info("Deleting index" + indexName);
+        DeleteIndexRequestBuilder deleteIndexRequestBuilder = elasticClient.admin()
+                .indices()
+                .prepareDelete(indexName);
+        return deleteIndexRequestBuilder.execute().actionGet().isAcknowledged();
     }
 
     public boolean createDocument(String indexName, String indexType, String document,
