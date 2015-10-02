@@ -1,7 +1,10 @@
+# required to run on container based infra
 sudo: false
 
+# set language
 language: java
 
+# environment variables
 env:
   global:
   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
@@ -10,6 +13,10 @@ env:
   # The next declaration is the encrypted COVERALLS_REPO_TOKEN, created
   #   via the "travis encrypt" command using the project repo's public key
   - secure: UrreYxXuwyJLG7XOxi16lkVf1IwXbUOTElbfcCXD6MRmt4AgbCtvRgR5hp4ju5RxYvV/gfydI6Pqjga+YjXda/Xc/RbaDoAlaZnGCYkRsOq7zNV64CcVhyLQKlUSrxsMEt6mcpDXqQahvETHLwxdmU5IO47KMSBh1nhC2Nyhl2sV6hVGNStXo8NlOgfj22kLfXUoN+z/ugR7Km6oHYcLKaDqF+2xGWX9A3hjvdeBsND4wED7clj3G/VlOYWTtXNXVaKcc7fQrLJGFY0RytMsdTqOCGcrJxVFAM54PN1uO59ifyHa3We+Q3BfcYk+Gm3FboV2THiQOQ8KmGMir7spAR+aIpfsy3UQQdxGQNbkwoY7z4eta7vPg96iNovnOMVNIO0CANXEUvEU0mUH7l4ua7lE2Ytr+jmJmmMeLP7jx6yV+eo9NndtJW/se6ACXfJGULwITl4zplUyOAs49bdV8eFOs2RnyJGxW9Ehiw0p7+23KtelZZG1jdVwAjnMkqMfW2D/PcHsKA1b+WjnA7/rFa+FOKZBOnbA4jcBEAchGNjVUWhWlS87Vg66iKBtL/qT20iB2V3NWclhdurdTAAfsciozI177C/ymhpy+tCd8H3REPMRKYK3KPyQpT/QwKhfgsokmYm9zEbLiS8qo/kkE3OLdZEna+NF0Gw9CRfpauc=
+
+# local instance of elasticsearch
+services:
+  - elasticsearch
 
 #addons:
 #  coverity_scan:
@@ -21,5 +28,10 @@ env:
 #    build_command: "mvn -DskipTests=true compile"
 #    branch_pattern: master
 
+# wait in case elasticsearch is not up
+before_script:
+  - sleep 10
+
+# send coverage report to coveralls
 after_success:
   - mvn clean test jacoco:report coveralls:report

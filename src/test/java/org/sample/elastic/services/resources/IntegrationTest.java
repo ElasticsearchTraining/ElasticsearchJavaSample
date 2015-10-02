@@ -18,8 +18,7 @@ public class IntegrationTest {
         new DropwizardAppRule<ElasticSampleConfiguration>(ElasticSampleApplication.class,
             ResourceHelpers.resourceFilePath("local.yaml"));
 
-    //@Ignore("Runs locally but not on travis-ci and codeship")  @Test
-	@Test
+    @Ignore("Runs locally but not on travis-ci and codeship")  @Test
     public void runServerTest() {
         Client client = new JerseyClientBuilder().build();
         String result = client.target(
