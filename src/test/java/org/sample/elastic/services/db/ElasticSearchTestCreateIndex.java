@@ -1,5 +1,6 @@
 package org.sample.elastic.services.db;
 
+import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Date;
 
-public class ElasticSearchTestCreateIndex {
+public class ElasticSearchTestCreateIndex extends TestCase {
 
     private ElasticSampleConfiguration esConfig;
     private ElasticSearch esClient;
