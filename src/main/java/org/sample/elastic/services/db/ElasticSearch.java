@@ -7,8 +7,10 @@ import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuild
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.*;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
@@ -39,8 +41,9 @@ public class ElasticSearch implements Managed{
     }
 
     //Method is called start so that it implements doStart from Dropwizard Managed
-    //All these settings can be loaded form elasticsearch or a custom yml file
+    //All these settings can be loaded from elasticsearch or a custom yml file or environment variables
     public void start() throws Exception {
+
         final Settings esSettings = ImmutableSettings.settingsBuilder()
                 .put("node.name", elasticClientName) //name of the node
                 .put("http.port", elasticPort) //port on which the node runs in client machine
@@ -50,8 +53,8 @@ public class ElasticSearch implements Managed{
 
         elasticNode = new NodeBuilder()
                 .settings(esSettings)
-                .clusterName(elasticClusterName) //cluster to connect to
-                .client(true)
+                .clusterName(elasticClusterName)    //cluster to connect to
+                .data(true)
                 .build()
                 .start();
 
