@@ -44,7 +44,7 @@ public class ElasticResource {
     @Path("/create/index")
     @ApiOperation(
             value = "Create an index",
-            notes = "Create an index in ElasticSearch. Provide a valid JSON in Document Fields" +
+            notes = "Create an index in ElasticSearch. Provide a valid JSON in Document Fields " +
                     "with all the fields required for Document Type.",
             response = ElasticSearch.class
     )

@@ -3,6 +3,7 @@ package org.sample.elastic.services.db;
 import io.dropwizard.lifecycle.Managed;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -39,8 +40,9 @@ public class ElasticSearch implements Managed{
     }
 
     //Method is called start so that it implements doStart from Dropwizard Managed
-    //All these settings can be loaded form elasticsearch or a custom yml file
+    //All these settings can be loaded from elasticsearch or a custom yml file or environment variables
     public void start() throws Exception {
+
         final Settings esSettings = ImmutableSettings.settingsBuilder()
                 .put("node.name", elasticClientName) //name of the node
                 .put("http.port", elasticPort) //port on which the node runs in client machine
@@ -50,8 +52,8 @@ public class ElasticSearch implements Managed{
 
         elasticNode = new NodeBuilder()
                 .settings(esSettings)
-                .clusterName(elasticClusterName) //cluster to connect to
-                .client(true)
+                .clusterName(elasticClusterName)    //cluster to connect to
+                .data(true)
                 .build()
                 .start();
 
@@ -133,6 +135,14 @@ public class ElasticSearch implements Managed{
                     .isAcknowledged();
         } else
             return false;
+    }
+
+    public boolean deleteIndex(String indexName, Logger esLogger) {
+        esLogger.info("Deleting index" + indexName);
+        DeleteIndexRequestBuilder deleteIndexRequestBuilder = elasticClient.admin()
+                .indices()
+                .prepareDelete(indexName);
+        return deleteIndexRequestBuilder.execute().actionGet().isAcknowledged();
     }
 
     public boolean createDocument(String indexName, String indexType, String document,

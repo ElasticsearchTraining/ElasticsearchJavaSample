@@ -41,11 +41,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>0.8.0</dropwizard.version>
-        <elasticsearch.version>1.6.0</elasticsearch.version>
+        <elasticsearch.version>1.7.1</elasticsearch.version>
         <jacksoncore.version>2.5.1</jacksoncore.version>
         <dropwizard.swagger.bundle>0.7.0</dropwizard.swagger.bundle>
         <json.version>20140107</json.version>
         <jdk.version>1.7</jdk.version>
+        <junit.version>4.11</junit.version>
+        <jacoco.version>0.7.5.201505241946</jacoco.version>
+        <surefire.version>2.17</surefire.version>
+        <coveralls.version>3.0.1</coveralls.version>
+        <googlehttp.version>1.20.0</googlehttp.version>
+		<jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec</jacoco.ut.execution.data.file>
         <mainClass>org.sample.elastic.services.ElasticSampleApplication</mainClass>
     </properties>
 
@@ -75,10 +81,61 @@
             <artifactId>json</artifactId>
             <version>${json.version}</version>
         </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-testing</artifactId>
+			<version>${dropwizard.version}</version>
+		</dependency>
+<!--        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>${googlehttp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-jackson2</artifactId>
+            <version>${googlehttp.version}</version>
+        </dependency> -->
     </dependencies>
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <configuration>
+                    <repoToken>${coveralls-repotoken}</repoToken>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -88,6 +145,7 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+			
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

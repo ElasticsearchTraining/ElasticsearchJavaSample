@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample.svg?branch=master)](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample) [![Coverity Scan Build Status](https://scan.coverity.com/projects/6428/badge.svg)](https://scan.coverity.com/projects/elasticsearchtraining-elasticsearchjavasample) [![Codeship Deploy Status](https://codeship.com/projects/77e61860-43c5-0133-6157-525e623546c2/status?branch=master)](https://codeship.com/projects/77e61860-43c5-0133-6157-525e623546c2/status?branch=master) [![Heroku](https://heroku-badge.herokuapp.com/?app=elasticsearchjavasample&root=swagger/)](https://elasticsearchjavasample.herokuapp.com/swagger)
+[![Build Status](https://travis-ci.org/ElasticsearchTraining/ElasticsearchJavaSample.svg?branch=master)]() [![Coverage Status](https://coveralls.io/repos/ElasticsearchTraining/ElasticsearchJavaSample/badge.svg?branch=master&service=github)]() [![Heroku](https://heroku-badge.herokuapp.com/?app=elasticsearchjavasample&root=swagger/)]()
 
 ElasticsearchJavaSample
 =======================
@@ -11,10 +11,10 @@ Project Details:
 - dropwizard v0.8
 - dropwizard-swagger bundle v0.7
 - Java v1.7
-- ElasticSearch Java API v1.5.2
+- ElasticSearch Java API v1.7.1
 - Maven v3.2.5
 
-This project has been tested with ElasticSearch Server v1.5.2.
+This project has been tested with ElasticSearch Server v1.7.1.
 
 Prerequisites:
 --------------
@@ -37,12 +37,12 @@ should appear as shown below.
 
 Tips:
 -----
-- Run ElasticSearch Server locally. Set up the cluster.name in elasticsearch.yml as "elasticsearch-local".
+- Run ElasticSearch Server locally. Ensure the cluster.name in elasticsearch.yml is "elasticsearch".
 - Refer the [Elasticsearch Samples Gist](https://gist.github.com/rajanm/3fdbc7999f0120ce5e87) for scripts
 to create indices and documents.
 - Install and use the Head plugin in ElasticSearch to view the indices, documents, queries, cluster and node status etc.
 - Update Maven settings to download the dependencies to a local folder on disk (instead of a network folder).
-- If behind a firewall, update the proxy settings for Git client and Maven.
+- If you are behind a firewall, update the proxy settings for Git client and Maven.
 
 Thanks:
 -------

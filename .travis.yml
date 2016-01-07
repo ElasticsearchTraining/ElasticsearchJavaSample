@@ -1,17 +1,19 @@
+sudo: false
 language: java
-
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "b2hPzkwKJpLgd4L7mG5K7VWJz9WKLqYpEdTlg3Yx5/BJE0DFL6XXqKeFHY6RDE+3htr8aJY9kSJyqJpS4f1jaTEcBhmWdpItgykSYnCv1an4/Is0zpf5g+2PzoUSFGGfrujWMvLWtpf/qvOwu435gtzpI6MWWj/xHg0+bqFFBNvp5oHCXa8S7DKMv9vcNzQ5CMS1ME4KAtK4Q2AIXgu/GGyH/krgy3gL9w+duUoJt8bMRxKGU7hqEOLFsdamsz855MooJg0ebfZnuak6zF3D/VOzdZ+nvbxMnq/IgHijATgcQQv5960wcj4PT3U2cQpj4RPjzxdEaSY/7BZaeQnzTyotfdk/zgZ64VPlE+p2M1yNtdZNt6p+1jkI7EN41LhptNcYXZv4sqiUBqRcSOS8+v7P5u+PTSlDnZnhv10rfygwa7AkrrsaB5cixaWUV/0kVB/UmTi/KMoEfI0NDFuReVkW3vQEKzMStln1zHuYSEELbj/xjVP4XTlVwc/OubDu8hJ6Ar7PyeBO7/SWbfznUszaA7kRZzmqKPQQ+prtXhjEFY0+F4nWQDYuyRmcRzfWm0B5/qvbudREf3s/WkcjiLctNjm98bdFl2EmB4uDajTwg0/MZfpuir+/LFpK1+yn9/VLaCkwIzigZu//P7CxdZDBlAczy+0akwmwwoSEnew="
-
-addons:
-  coverity_scan:
-    project:
-      name: "ElasticsearchTraining/ElasticsearchJavaSample"
-      description: "Build submitted via Travis CI"
-    notification_email: rajan.manickavasagam@gmail.com
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn -DskipTests=true compile"
-    branch_pattern: master
+  - secure: b2hPzkwKJpLgd4L7mG5K7VWJz9WKLqYpEdTlg3Yx5/BJE0DFL6XXqKeFHY6RDE+3htr8aJY9kSJyqJpS4f1jaTEcBhmWdpItgykSYnCv1an4/Is0zpf5g+2PzoUSFGGfrujWMvLWtpf/qvOwu435gtzpI6MWWj/xHg0+bqFFBNvp5oHCXa8S7DKMv9vcNzQ5CMS1ME4KAtK4Q2AIXgu/GGyH/krgy3gL9w+duUoJt8bMRxKGU7hqEOLFsdamsz855MooJg0ebfZnuak6zF3D/VOzdZ+nvbxMnq/IgHijATgcQQv5960wcj4PT3U2cQpj4RPjzxdEaSY/7BZaeQnzTyotfdk/zgZ64VPlE+p2M1yNtdZNt6p+1jkI7EN41LhptNcYXZv4sqiUBqRcSOS8+v7P5u+PTSlDnZnhv10rfygwa7AkrrsaB5cixaWUV/0kVB/UmTi/KMoEfI0NDFuReVkW3vQEKzMStln1zHuYSEELbj/xjVP4XTlVwc/OubDu8hJ6Ar7PyeBO7/SWbfznUszaA7kRZzmqKPQQ+prtXhjEFY0+F4nWQDYuyRmcRzfWm0B5/qvbudREf3s/WkcjiLctNjm98bdFl2EmB4uDajTwg0/MZfpuir+/LFpK1+yn9/VLaCkwIzigZu//P7CxdZDBlAczy+0akwmwwoSEnew=
+  - secure: UrreYxXuwyJLG7XOxi16lkVf1IwXbUOTElbfcCXD6MRmt4AgbCtvRgR5hp4ju5RxYvV/gfydI6Pqjga+YjXda/Xc/RbaDoAlaZnGCYkRsOq7zNV64CcVhyLQKlUSrxsMEt6mcpDXqQahvETHLwxdmU5IO47KMSBh1nhC2Nyhl2sV6hVGNStXo8NlOgfj22kLfXUoN+z/ugR7Km6oHYcLKaDqF+2xGWX9A3hjvdeBsND4wED7clj3G/VlOYWTtXNXVaKcc7fQrLJGFY0RytMsdTqOCGcrJxVFAM54PN1uO59ifyHa3We+Q3BfcYk+Gm3FboV2THiQOQ8KmGMir7spAR+aIpfsy3UQQdxGQNbkwoY7z4eta7vPg96iNovnOMVNIO0CANXEUvEU0mUH7l4ua7lE2Ytr+jmJmmMeLP7jx6yV+eo9NndtJW/se6ACXfJGULwITl4zplUyOAs49bdV8eFOs2RnyJGxW9Ehiw0p7+23KtelZZG1jdVwAjnMkqMfW2D/PcHsKA1b+WjnA7/rFa+FOKZBOnbA4jcBEAchGNjVUWhWlS87Vg66iKBtL/qT20iB2V3NWclhdurdTAAfsciozI177C/ymhpy+tCd8H3REPMRKYK3KPyQpT/QwKhfgsokmYm9zEbLiS8qo/kkE3OLdZEna+NF0Gw9CRfpauc=
+services:
+- elasticsearch
+before_script:
+- sleep 10
+after_success:
+- mvn clean test jacoco:report coveralls:report
+deploy:
+  provider: heroku
+  api_key:
+    secure: l8B09X3cNWmziYUDnMTZHUiwpaSl6cHZMwFGVTsUct9SjNRtloB9iuGCNQ8wIZp/d7tcsxHAqZ2nrkCdCTJlY2v/ZCXinT1Oq7aVwT4yIdEadsBIcn9VEh+N9zTj2Kkj6TLh03vETK5ZiQ/vR3FmXFwWZBPWM1bp4Yxmwyn5tBxrjCDwASrjYaDiRrIxw3yRqAnVIa7+UzOY9mfx8jSfFKUBTeMR+eJCkWEmAznpQVW+ODZfPcp35C7I6JXm2Zm95HQgaFwMZtEilLIPpCvfU+Tlr7uBMvJKnlL2gv69tBgippEO9Th7FPmGHPYSYymDbzs5+Yx9tpxhHqk/p3koLEKMR5beP25MTmUYUAgmi4aHJsaQeagqgnXhBgiaQ65xRU1JNdmkd/bA3/YAdsZmSmdmruPTDxZm2LuOblVXcsr4Y+Njt1XKcQ/i4dX1pRNn+5MjOFRGxJzvs8OSXM9yb2iDTfdibuhIkQ87avBo51e9ag6ZCYkVjG2QaZmjEJCUj2qFcJu2ppvjvuOnbSFGS8xCmT7qh1NO4fgvqMee2XzahYbzPSRd6F4Rmch6n7xSmWDfgtfXY4qXz+ELdFfbKlXFgx6knzFBWzPR0Wnkj3pz3O1TIKcmo/9EhWfbDoJCXF5BHYUXHr0NgrpXJ171Ljf33VM0V5dHDk7BgqLXFcc=
+  app: elasticsearchjavasample
+  on:
+    repo: ElasticsearchTraining/ElasticsearchJavaSample
