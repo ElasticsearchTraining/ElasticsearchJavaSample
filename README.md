@@ -3,7 +3,8 @@
 ElasticsearchJavaSample
 =======================
 
-This is a sample project to demonstrate the ElasticSearch Java API's. I use this project as part of trainings on ElasticSearch.
+This is a sample project to demonstrate the ElasticSearch Java API's. I use this project as part of trainings on ElasticSearch. 
+I have developed the project using Codenvy (IDE), Travis CI (CI-CD), Coveralls (Coverage) and deployed it on Heroku (PaaS).
 
 Project Details:
 ----------------
